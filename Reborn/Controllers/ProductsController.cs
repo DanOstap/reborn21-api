@@ -18,31 +18,41 @@ namespace Reborn.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
         {
+         
             return await _productsService.Create(product);
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _productsService.GetProducts();
+            var Products = await _productsService.GetProducts();
+            if (Products == null) return NotFound();
+            return Ok(Products);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-          return await _productsService.GetOneProductById(id);
+            var Product = await _productsService.GetOneProductById(id);
+            if (Product == null) return NotFound();
+            return Ok(Product);
         }
 
         [HttpPut("{id}")]
-        public async Task<Product> PutProduct(int id, Product product)
+        public async Task<ActionResult<Product>> PutProduct(int id, Product product)
         {
-            return await _productsService.Update(id, product);
+            var Updated_Product = await _productsService.Update(id, product);
+            if (Updated_Product == null) return BadRequest();
+            return Ok(Updated_Product);
         }
 
         [HttpDelete("{id}")]
-        public async Task<Product> DeleteProduct(int id)
+        public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
-            return await _productsService.Remove(id);
+            var Deleted_Product = await _productsService.Remove(id);
+            if (Deleted_Product == null) return BadRequest();
+            return Ok(Deleted_Product);
+           
         }
     }
 }
