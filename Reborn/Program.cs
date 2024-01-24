@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 using Reborn;
 using Reborn.Services;
 
@@ -12,6 +13,7 @@ builder.Services.AddScoped<IProductsService, ProductsService>();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -20,9 +22,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCookiePolicy();
 app.UseAuthorization();
-
+app.UseCors();
 app.MapControllers();
 
 app.Run();
