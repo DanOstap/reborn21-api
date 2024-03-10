@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using NuGet.Protocol;
 using Reborn.Models;
-using System.Linq;
 
 namespace Reborn.Cookies
 {
+    [Route("api/cookies")]
+    [ApiController]
+    [Authorize]
     public class ProductCookiesController : ControllerBase
     {
 
-        [HttpPost("/api/AddCookies")]
+        [HttpPost("add")]
         public IActionResult PostCookies([FromBody] Cart Cart_Model)
         {
             Dictionary<string, string[]> Cookies_Dictionary = new Dictionary<string, string[]> { };
@@ -41,19 +43,19 @@ namespace Reborn.Cookies
             return Ok(Cart_Model);
         }
 
-        [HttpGet("api/GetCookies")]
+        [HttpGet("get")]
         public IActionResult GetCookies()
         {
             return Ok(Request.Cookies["Product"]);
         }
 
-        [HttpDelete("api/DeleteCookies")]
+        [HttpDelete("delete")]
         public IActionResult DeleteCookies()
         {
             Response.Cookies.Delete("Product");
             return Ok("Delete Confirm");
         }
-        [HttpDelete("api/DelteByKey")]
+        [HttpDelete("deleteByKey")]
         public IActionResult DeleteCookieByKey(string key) {
             var cookies = JsonConvert.DeserializeObject<Dictionary<string, string[]>>
                     (Request.Cookies["Product"]);
@@ -62,7 +64,7 @@ namespace Reborn.Cookies
             Response.Cookies.Append("Product", JsonConvert.SerializeObject(cookies));
             return Ok();
         }
-        [HttpPatch("/api/EditCookies")]
+        [HttpPatch("edit")]
         public IActionResult EditCookies(string  key, [FromBody] Cart Cart_Model) {
             var cookies = JsonConvert.DeserializeObject<Dictionary<string, string[]>>
                     (Request.Cookies["Product"]);

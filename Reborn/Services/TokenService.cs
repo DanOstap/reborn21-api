@@ -9,7 +9,6 @@ namespace Reborn.Services
     public interface ITokenService
     {
         string CreateToken(User user);
-        bool ValidateToken(string token, out JwtSecurityToken jwt);
     }
     public class TokenService : ITokenService
     {
@@ -28,13 +27,14 @@ namespace Reborn.Services
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                configuration.GetSection("AppSettings:Token").Value!));
+                configuration["JWT:Key"]!));
 
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
-            var token = new JwtSecurityToken(
+            var token = new JwtSecurityToken(configuration["JWT:Issuer"],
+                configuration["JWT:Issuer"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(1),
+                expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: creds
                 );
 
@@ -42,33 +42,5 @@ namespace Reborn.Services
 
             return jwt;
         }
-
-        public bool ValidateToken(string token, out JwtSecurityToken jwt)
-        {
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
-                configuration.GetSection("AppSettings:Token").Value!));
-            try { 
-                var validationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = key,
-                    ValidateLifetime = true
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
-                jwt = (JwtSecurityToken)validatedToken;
-
-                return true;
-            }
-            catch (SecurityTokenValidationException ex) {
-                jwt = null;
-                // Log the reason why the token is not valid
-                return false;
-  }
-        }
-
-
     }
 }
