@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Reborn.Models
 {
+    [Table("orders")]
     public class Order
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; }
+        public int id { get; set; }
 
         [Required]
         public  int user_Id { get; set; }

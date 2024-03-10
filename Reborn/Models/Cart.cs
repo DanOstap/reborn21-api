@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Reborn.Models
 {
+    [Table("cart")]
     public class Cart
     {
         [Required]
