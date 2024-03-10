@@ -9,6 +9,7 @@ builder.Services.AddDbContext<Context>(options => options.UseNpgsql(connection))
 
 builder.Services.AddScoped<IProductsService, ProductsService>();
 builder.Services.AddScoped<IUsersService, UsersService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
