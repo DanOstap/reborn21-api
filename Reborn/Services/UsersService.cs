@@ -20,7 +20,7 @@ namespace Reborn.Services
 
         async public Task<User> Create(User model)
         {
-               _context.User.Add(model);
+               _context.Users.Add(model);
             await _context.SaveChangesAsync();
 
             return model;
@@ -28,31 +28,31 @@ namespace Reborn.Services
 
         async public Task<List<User>?> FindAll()
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return null;
             }
-            return await _context.User.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
         async public Task<User?> FindOneByEmail(string email)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return null;
             }
-            var user = await (_context.User?.FirstOrDefaultAsync(e => e.email == email));
+            var user = await (_context.Users?.FirstOrDefaultAsync(e => e.email == email));
 
             return user;
         }
 
         async public Task<User?> FindOneById(int id)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return null;
             }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -64,17 +64,17 @@ namespace Reborn.Services
 
         async public Task<User?> Remove(int id)
         {
-            if (_context.User == null)
+            if (_context.Users == null)
             {
                 return null;
             }
-            var user = await _context.User.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 return null;
             }
 
-            _context.User.Remove(user);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
             return user;

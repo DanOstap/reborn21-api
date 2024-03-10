@@ -6,8 +6,8 @@ namespace Reborn
     public class Context : DbContext
     {
         public DbSet<Product> Products { get; set; }
-        public DbSet<Order> Inventory { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<User> Users { get; set; }
 
         public Context(DbContextOptions<Context> options) : base(options) { }
 

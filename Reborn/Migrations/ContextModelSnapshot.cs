@@ -48,7 +48,7 @@ namespace Reborn.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("orders");
+                    b.ToTable("orders", (string)null);
                 });
 
             modelBuilder.Entity("Reborn.Models.Product", b =>
@@ -80,7 +80,7 @@ namespace Reborn.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("products");
+                    b.ToTable("products", (string)null);
                 });
 
             modelBuilder.Entity("Reborn.Models.User", b =>
@@ -108,7 +108,7 @@ namespace Reborn.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("users");
+                    b.ToTable("users", (string)null);
                 });
 #pragma warning restore 612, 618
         }

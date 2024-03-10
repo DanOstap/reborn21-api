@@ -26,9 +26,7 @@ namespace Reborn.Controllers
             user.password = hashedPassword;
 
             User newUser = await _usersService.Create(user);
-            Token token = new Token();
-            token.access_token = _tokenService.CreateToken(newUser);
-            return Ok(token);
+            return Ok(_tokenService.CreateToken(newUser));
         }
 
         [HttpPost("login")]
@@ -38,7 +36,7 @@ namespace Reborn.Controllers
             if(!BCrypt.Net.BCrypt.Verify(user.password, existingUser.password))
                 return BadRequest("Invalid Password");
 
-            return Ok(existingUser);
+            return Ok(_tokenService.CreateToken(existingUser));
         }
     }
 }
