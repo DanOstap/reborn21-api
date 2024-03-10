@@ -9,10 +9,12 @@ namespace Reborn.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IUsersService _usersService;
+        private readonly ITokenService _tokenService;
 
-        public AuthController(IUsersService usersService)
+        public AuthController(ITokenService tokenService, IUsersService usersService)
         {
             _usersService = usersService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -23,7 +25,10 @@ namespace Reborn.Controllers
             string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.password);
             user.password = hashedPassword;
 
-            return Ok(await _usersService.Create(user));
+            User newUser = await _usersService.Create(user);
+            Token token = new Token();
+            token.access_token = _tokenService.CreateToken(newUser);
+            return Ok(token);
         }
 
         [HttpPost("login")]
