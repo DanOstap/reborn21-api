@@ -3,14 +3,7 @@ using Reborn.Models;
 
 namespace Reborn.Services
 {
-    public interface IProductsService
-    {
-        public Task<Product> Create(Product product);
-        public Task<List<Product>?> GetProducts();
-        public Task<Product?> GetOneProductById(int id);
-        public Task<Product?> Update(int id, Product product);
-        public Task<Product?> Remove(int id);
-    }
+    public interface IProductsService : IService<Product> {}
 
     public class ProductsService : IProductsService
     {
@@ -29,7 +22,7 @@ namespace Reborn.Services
             return product;
         }
 
-        public async Task<Product?> GetOneProductById(int id)
+        public async Task<Product?> FindOneById(int id)
         {
             if (_context.Products == null)
             {
@@ -45,7 +38,7 @@ namespace Reborn.Services
             return product;
         }
 
-        public async Task<List<Product>?> GetProducts()
+        public async Task<List<Product>?> FindAll()
         {
             if (_context.Products == null)
             {

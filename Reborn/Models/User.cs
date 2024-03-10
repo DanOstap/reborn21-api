@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Reborn.Models
 {
+    [Table("users")]
     public class User
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; }
+        public int id { get; set; }
 
         [Required]
         public string email { get; set; }
@@ -18,6 +19,6 @@ namespace Reborn.Models
 
         public bool isActivated { get; set; } = false;
 
-        public string activationLink { get; set; }
+        public string activationLink { get; set; } = "test";
     }
 }

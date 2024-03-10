@@ -19,13 +19,13 @@ namespace Reborn.Controllers
         public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
         {
          
-            return await _productsService.Create(product);
+            return Ok(await _productsService.Create(product));
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var Products = await _productsService.GetProducts();
+            var Products = await _productsService.FindAll();
             if (Products == null) return NotFound();
             return Ok(Products);
         }
@@ -33,7 +33,7 @@ namespace Reborn.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var Product = await _productsService.GetOneProductById(id);
+            var Product = await _productsService.FindOneById(id);
             if (Product == null) return NotFound();
             return Ok(Product);
         }
