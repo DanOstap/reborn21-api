@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using NuGet.Protocol;
 using Reborn;
 using Reborn.Services;
 
@@ -9,6 +8,7 @@ string? connection = builder.Configuration.GetConnectionString("pg");
 builder.Services.AddDbContext<Context>(options => options.UseNpgsql(connection));
 
 builder.Services.AddScoped<IProductsService, ProductsService>();
+builder.Services.AddScoped<IUsersService, UsersService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
