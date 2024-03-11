@@ -1,5 +1,4 @@
-﻿
-namespace Reborn.Services
+﻿namespace Reborn.Services
 {
     public interface IService<T>
     {

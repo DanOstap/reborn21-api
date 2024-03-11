@@ -34,7 +34,7 @@ namespace Reborn.Services
             var token = new JwtSecurityToken(configuration["JWT:Issuer"],
                 configuration["JWT:Issuer"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(120),
+                expires: DateTime.Now.AddHours(double.Parse(configuration["JWT:LifetimeInHours"])),
                 signingCredentials: creds
                 );
 
