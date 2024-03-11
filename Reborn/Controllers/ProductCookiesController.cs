@@ -7,7 +7,6 @@ namespace Reborn.Cookies
 {
     [Route("api/cookies")]
     [ApiController]
-    [Authorize]
     public class ProductCookiesController : ControllerBase
     {
 

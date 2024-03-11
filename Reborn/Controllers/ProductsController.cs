@@ -7,7 +7,6 @@ namespace Reborn.Controllers
 {
     [Route("api/products")]
     [ApiController]
-    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService productsService;
@@ -25,6 +24,7 @@ namespace Reborn.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             var Products = await productsService.FindAll();
@@ -32,6 +32,7 @@ namespace Reborn.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
             var Product = await productsService.FindOneById(id);
