@@ -11,48 +11,48 @@ namespace Reborn.Services
 
     public class UsersService : IUsersService
     {
-        private readonly Context _context;
+        private readonly Context context;
 
         public UsersService(Context context)
         {
-            _context = context;
+            this.context = context;
         }
 
         async public Task<User> Create(User model)
         {
-               _context.Users.Add(model);
-            await _context.SaveChangesAsync();
+               context.Users.Add(model);
+            await context.SaveChangesAsync();
 
             return model;
         }
 
         async public Task<List<User>?> FindAll()
         {
-            if (_context.Users == null)
+            if (context.Users == null)
             {
                 return null;
             }
-            return await _context.Users.ToListAsync();
+            return await context.Users.ToListAsync();
         }
 
         async public Task<User?> FindOneByEmail(string email)
         {
-            if (_context.Users == null)
+            if (context.Users == null)
             {
                 return null;
             }
-            var user = await (_context.Users?.FirstOrDefaultAsync(e => e.email == email));
+            var user = await (context.Users?.FirstOrDefaultAsync(e => e.email == email));
 
             return user;
         }
 
         async public Task<User?> FindOneById(int id)
         {
-            if (_context.Users == null)
+            if (context.Users == null)
             {
                 return null;
             }
-            var user = await _context.Users.FindAsync(id);
+            var user = await context.Users.FindAsync(id);
 
             if (user == null)
             {
@@ -64,18 +64,18 @@ namespace Reborn.Services
 
         async public Task<User?> Remove(int id)
         {
-            if (_context.Users == null)
+            if (context.Users == null)
             {
                 return null;
             }
-            var user = await _context.Users.FindAsync(id);
+            var user = await context.Users.FindAsync(id);
             if (user == null)
             {
                 return null;
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            context.Users.Remove(user);
+            await context.SaveChangesAsync();
 
             return user;
         }
@@ -87,11 +87,11 @@ namespace Reborn.Services
                 return null;
             }
 
-            _context.Entry(model).State = EntityState.Modified;
+            context.Entry(model).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -110,7 +110,7 @@ namespace Reborn.Services
 
         private bool ProductExists(int id)
         {
-            return (_context.Products?.Any(e => e.id == id)).GetValueOrDefault();
+            return (context.Products?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }
