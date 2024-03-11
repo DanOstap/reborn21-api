@@ -10,51 +10,48 @@ namespace Reborn.Controllers
     [Authorize]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductsService _productsService;
+        private readonly IProductsService productsService;
 
         public ProductsController(IProductsService productsService)
         {
-            _productsService = productsService;
+            this.productsService = productsService;
         }
 
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
         {
          
-            return Ok(await _productsService.Create(product));
+            return Ok(await productsService.Create(product));
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            var Products = await _productsService.FindAll();
-            if (Products == null) return NotFound();
+            var Products = await productsService.FindAll();
             return Ok(Products);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
-            var Product = await _productsService.FindOneById(id);
-            if (Product == null) return NotFound();
+            var Product = await productsService.FindOneById(id);
+            if (Product == null) return NotFound(new {message = "Product not found."});
             return Ok(Product);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<Product>> PutProduct(int id, Product product)
         {
-            var Updated_Product = await _productsService.Update(id, product);
-            if (Updated_Product == null) return BadRequest();
+            var Updated_Product = await productsService.Update(id, product);
+            if (Updated_Product == null) return NotFound(new { message = "Product not found." });
             return Ok(Updated_Product);
         }
 
         [HttpDelete("{id}")]
         public async Task<ActionResult<Product>> DeleteProduct(int id)
         {
-            var Deleted_Product = await _productsService.Remove(id);
-            if (Deleted_Product == null) return BadRequest();
+            var Deleted_Product = await productsService.Remove(id);
             return Ok(Deleted_Product);
-           
         }
     }
 }
