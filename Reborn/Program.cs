@@ -47,6 +47,6 @@ if (app.Environment.IsDevelopment())
 app.UseCookiePolicy();
 app.UseAuthorization();
 app.UseCors();
-app.MapControllers();
+app.MapControllers().RequireAuthorization();
 
 app.Run();

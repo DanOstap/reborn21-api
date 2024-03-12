@@ -7,28 +7,28 @@ namespace Reborn.Services
 
     public class ProductsService : IProductsService
     {
-        private readonly Context _context;
+        private readonly Context context;
 
         public ProductsService(Context context)
         {
-            _context = context;
+            this.context = context;
         }
 
         public async Task<Product> Create(Product product)
         {
-            _context.Products.Add(product);
-            await _context.SaveChangesAsync();
+            context.Products.Add(product);
+            await context.SaveChangesAsync();
 
             return product;
         }
 
         public async Task<Product?> FindOneById(int id)
         {
-            if (_context.Products == null)
+            if (context.Products == null)
             {
                 return null;
             }
-            var product = await _context.Products.FindAsync(id);
+            var product = await context.Products.FindAsync(id);
 
             if (product == null)
             {
@@ -40,27 +40,27 @@ namespace Reborn.Services
 
         public async Task<List<Product>?> FindAll()
         {
-            if (_context.Products == null)
+            if (context.Products == null)
             {
                 return null;
             }
-            return await _context.Products.ToListAsync();
+            return await context.Products.ToListAsync();
         }
 
         public async Task<Product?> Remove(int id)
         {
-            if (_context.Products == null)
+            if (context.Products == null)
             {
                 return null;
             }
-            var product = await _context.Products.FindAsync(id);
+            var product = await context.Products.FindAsync(id);
             if (product == null)
             {
                 return null;
             }
 
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
+            context.Products.Remove(product);
+            await context.SaveChangesAsync();
 
             return product;
         }
@@ -72,11 +72,11 @@ namespace Reborn.Services
                 return null;
             }
 
-            _context.Entry(product).State = EntityState.Modified;
+            context.Entry(product).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -95,7 +95,7 @@ namespace Reborn.Services
 
         private bool ProductExists(int id)
         {
-            return (_context.Products?.Any(e => e.id == id)).GetValueOrDefault();
+            return (context.Products?.Any(e => e.id == id)).GetValueOrDefault();
         }
     }
 }
