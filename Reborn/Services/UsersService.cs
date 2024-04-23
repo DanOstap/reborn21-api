@@ -37,10 +37,8 @@ namespace Reborn.Services
 
         async public Task<User?> FindOneByEmail(string email)
         {
-            if (context.Users == null)
-            {
-                return null;
-            }
+            if (context.Users == null) return null;
+
             var user = await (context.Users?.FirstOrDefaultAsync(e => e.email == email));
 
             return user;
@@ -48,7 +46,7 @@ namespace Reborn.Services
 
         async public Task<User?> FindOneById(int id)
         {
-            if (context.Users == null)
+            if (context.Users == null) 
             {
                 return null;
             }

@@ -11,10 +11,10 @@ namespace Reborn.Models
         public int id { get; set; }
 
         [Required]
-        public  int user_Id { get; set; }
+        public int user_Id { get; set; }
 
         [Required]
-        public int product_Id { get; set; }
+        public int product_Id { get; set; } 
 
         [Required]
         public string status { get; set; }
@@ -24,5 +24,8 @@ namespace Reborn.Models
 
         [Required]
         public DateOnly pickup_date { get; set; }
+
+        public Product Product { get; set; }
+        public User User { get; set; }
     }
 }
