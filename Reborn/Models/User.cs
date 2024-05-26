@@ -8,7 +8,7 @@ namespace Reborn.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id { get; set; }
+        public int user_id { get; set; }
 
         [Required]
         public string email { get; set; }
@@ -20,5 +20,9 @@ namespace Reborn.Models
         public bool isActivated { get; set; } = false;
 
         public string activationLink { get; set; } = "test";
+<<<<<<< Updated upstream
+=======
+        public ICollection<Order> Order { get; set; }
+>>>>>>> Stashed changes
     }
 }

@@ -67,7 +67,7 @@ namespace Reborn.Services
 
         public async Task<Product?> Update(int id, Product product)
         {
-            if (id != product.id)
+            if (id != product.product_id)
             {
                 return null;
             }
@@ -95,7 +95,7 @@ namespace Reborn.Services
 
         private bool ProductExists(int id)
         {
-            return (context.Products?.Any(e => e.id == id)).GetValueOrDefault();
+            return (context.Products?.Any(e => e.product_id == id)).GetValueOrDefault();
         }
     }
 }

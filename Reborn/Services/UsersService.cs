@@ -82,7 +82,7 @@ namespace Reborn.Services
 
         async public Task<User?> Update(int id, User model)
         {
-            if (id != model.id)
+            if (id != model.user_id)
             {
                 return null;
             }
@@ -110,7 +110,7 @@ namespace Reborn.Services
 
         private bool ProductExists(int id)
         {
-            return (context.Products?.Any(e => e.id == id)).GetValueOrDefault();
+            return (context.Products?.Any(e => e.product_id == id)).GetValueOrDefault();
         }
     }
 }
