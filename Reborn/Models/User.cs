@@ -19,7 +19,7 @@ namespace Reborn.Models
 
         public bool isActivated { get; set; } = false;
 
-        public string activationLink { get; set; } = "test";
-        public ICollection<Order> orders { get; }
+        public string activationLink { get; set; }
+
     }
 }

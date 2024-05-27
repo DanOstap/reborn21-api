@@ -4,7 +4,12 @@ using System.Text;
 
 namespace Reborn.Services
 {
-    public class MailService
+    public interface IMailService
+    {
+        void SendEmail(string toMail, string subject, string body);
+    }
+
+    public class MailService : IMailService
     {
         private readonly IConfiguration configuration;
         public MailService(IConfiguration configuration)

@@ -7,6 +7,7 @@ namespace Reborn.Services
     public interface IUsersService : IService<User>
     {
         public Task<User?> FindOneByEmail(string email);
+        public Task<User?> FindOneByActivationLink(string activationLink);
     }
 
     public class UsersService : IUsersService
@@ -40,6 +41,15 @@ namespace Reborn.Services
             if (context.Users == null) return null;
 
             var user = await (context.Users?.FirstOrDefaultAsync(e => e.email == email));
+
+            return user;
+        }
+
+        async public Task<User?> FindOneByActivationLink(string activationLink)
+        {
+            if (context.Users == null) return null;
+
+            var user = await (context.Users?.FirstOrDefaultAsync(e => e.activationLink == activationLink));
 
             return user;
         }
