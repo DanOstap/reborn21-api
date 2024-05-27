@@ -21,7 +21,7 @@ namespace Reborn.Services
 
         async public Task<User> Create(User model)
         {
-               context.Users.Add(model);
+            context.Users.Add(model);
             await context.SaveChangesAsync();
 
             return model;
