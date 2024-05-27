@@ -5,11 +5,11 @@ namespace Reborn.Cookies
 {
     [Route("api/files")]
     [ApiController]
-    public class StaticController : ControllerBase
+    public class FileController : ControllerBase
     {
         IFileService fileService;
 
-        public StaticController(IFileService fileService)
+        public FileController(IFileService fileService)
         {
             this.fileService = fileService;
         }

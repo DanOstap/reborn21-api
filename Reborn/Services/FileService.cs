@@ -4,7 +4,6 @@
     public interface IFileService
     {
         string Upload(IFormFile file);
-        void Get(string filename);
     }
 
     public class FileService : IFileService
@@ -20,6 +19,8 @@
                 throw new Exception("Extention is not valid ");
             }
 
+            Directory.CreateDirectory("Uploads");
+
             string fileName = Guid.NewGuid().ToString() + extention;
             string path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads/");
 
@@ -29,11 +30,6 @@
             stream.Close();
 
             return fileName;
-        }
-
-        public void Get(string filename)
-        {
-            
         }
     }
 }
