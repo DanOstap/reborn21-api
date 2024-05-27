@@ -22,6 +22,7 @@ builder.Services.AddScoped<IUsersService, UsersService>();
 builder.Services.AddScoped<IOrderService, OrdersService>();
 builder.Services.AddScoped<IMailService, MailService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 var jwtIssuer = config.GetSection("JWT:Issuer").Get<string>();
 var jwtKey = config.GetSection("JWT:Key").Get<string>();

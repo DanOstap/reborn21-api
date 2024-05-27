@@ -4,7 +4,7 @@ using Reborn.Services;
 
 namespace Reborn.Controllers
 {
-    [Route("api/Orders")]
+    [Route("api/orders")]
     [ApiController]
     public class OrdersController : ControllerBase
     {
@@ -27,17 +27,11 @@ namespace Reborn.Controllers
             var product = await service.Create(order);
             return Ok(product);
         }
-        [HttpPut]
+        [HttpPatch]
         public async Task<ActionResult<Order>> ChangeStatus(int id, Order order)
         {
             var Order = await service.Update(id, order);
             return (Order == null) ? Ok() : NotFound(new { message = $"Order by if {id} not found." });
         }
-        [HttpPost("MailTest")]
-        public IActionResult Mail( string mail) {
-            Console.WriteLine(mail);
-            return Ok(mail);
-        }
-  
     }
 }

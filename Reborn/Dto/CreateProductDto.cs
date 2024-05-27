@@ -1,14 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Reborn.Models
+namespace Reborn.Dto
 {
-    [Table("products")]
-    public class Product
+    public class CreateProductDto
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
-        public int id { get; set; }
-
         [Required]
         public string name { get; set; }
 
@@ -23,9 +18,5 @@ namespace Reborn.Models
 
         [Required]
         public string size { get; set; }
-
-        public string image { get; set; }
-
-        // public ICollection<Order> orders { get; }
     }
 }
