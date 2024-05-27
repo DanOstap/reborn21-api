@@ -6,6 +6,7 @@ using Reborn.Services;
 namespace Reborn.Controllers
 {
     [Route("api/products")]
+    [AllowAnonymous]
     [ApiController]
     public class ProductsController : ControllerBase
     {

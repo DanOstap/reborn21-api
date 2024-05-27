@@ -6,8 +6,7 @@ namespace Reborn.Models
     [Table("products")]
     public class Product
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity), Key]
         public int id { get; set; }
 
         [Required]
@@ -24,5 +23,7 @@ namespace Reborn.Models
 
         [Required]
         public string size { get; set; }
+       
+       // public ICollection<Order> orders { get; }
     }
 }

@@ -27,7 +27,7 @@ namespace Reborn.Cookies
            Cart_Model.quantity.ToString()
             };
 
-            if (Request.Cookies["Product"] != null) {
+            if(Request.Cookies["Product"] != null) {
                 var cookies = JsonConvert.DeserializeObject<Dictionary<string, string[]>>
                     (Request.Cookies["Product"]);
 
@@ -63,6 +63,7 @@ namespace Reborn.Cookies
             Response.Cookies.Append("Product", JsonConvert.SerializeObject(cookies));
             return Ok();
         }
+
         [HttpPatch("edit")]
         public IActionResult EditCookies(string  key, [FromBody] Cart Cart_Model) {
             var cookies = JsonConvert.DeserializeObject<Dictionary<string, string[]>>
@@ -77,7 +78,6 @@ namespace Reborn.Cookies
                            Cart_Model.price.ToString(),
                            Cart_Model.quantity.ToString()
                  };
-                //
                 cookies[PatchCookiesByKey.Key] = Model_Array;
                 Response.Cookies.Append("Product", JsonConvert.SerializeObject(cookies));
                 return Ok($"Cookies by Key: {key} was edit ");
