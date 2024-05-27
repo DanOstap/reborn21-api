@@ -1,10 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Reborn.Dto;
 using Reborn.Models;
 
 namespace Reborn.Services
 {
 
-    public interface IOrderService : IService<Order> {    }
+    public interface IOrderService {
+        public Task<Order> Create(Order dto);
+        public Task<List<Order>?> FindAll();
+        public Task<Order?> FindOneById(int id);
+        public Task<Order?> Update(int id, Order model);
+        public Task<Order?> Remove(int id);
+    }
     public class OrdersService : IOrderService
     {
         private readonly Context context;

@@ -9,7 +9,7 @@ namespace Reborn.Cookies
     public class ProductCookiesController : ControllerBase
     {
 
-        [HttpPost("add")]
+        [HttpPost]
         public IActionResult PostCookies([FromBody] Cart Cart_Model)
         {
             Dictionary<string, string[]> Cookies_Dictionary = new Dictionary<string, string[]> { };
@@ -41,19 +41,19 @@ namespace Reborn.Cookies
             return Ok(Cart_Model);
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public IActionResult GetCookies()
         {
             return Ok(Request.Cookies["Product"]);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete]
         public IActionResult DeleteCookies()
         {
             Response.Cookies.Delete("Product");
             return Ok("Delete Confirm");
         }
-        [HttpDelete("deleteByKey")]
+        [HttpDelete("key")]
         public IActionResult DeleteCookieByKey(string key) {
             var cookies = JsonConvert.DeserializeObject<Dictionary<string, string[]>>
                     (Request.Cookies["Product"]);
@@ -63,7 +63,7 @@ namespace Reborn.Cookies
             return Ok();
         }
 
-        [HttpPatch("edit")]
+        [HttpPatch]
         public IActionResult EditCookies(string  key, [FromBody] Cart Cart_Model) {
             var cookies = JsonConvert.DeserializeObject<Dictionary<string, string[]>>
                     (Request.Cookies["Product"]);

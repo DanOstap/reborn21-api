@@ -1,13 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Reborn.Dto;
 using Reborn.Models;
 
 namespace Reborn.Services
 {
 
-    public interface IUsersService : IService<User>
+    public interface IUsersService
     {
+        public Task<User> Create(CreateUserDto dto);
         public Task<User?> FindOneByEmail(string email);
         public Task<User?> FindOneByActivationLink(string activationLink);
+        public Task<List<User>?> FindAll();
+        public Task<User?> FindOneById(int id);
+        public Task<User?> Update(int id, User model);
+        public Task<User?> Remove(int id);
     }
 
     public class UsersService : IUsersService
@@ -19,12 +25,18 @@ namespace Reborn.Services
             this.context = context;
         }
 
-        async public Task<User> Create(User model)
+        async public Task<User> Create(CreateUserDto dto)
         {
-            context.Users.Add(model);
+            User user = new User();
+
+            user.email = dto.email;
+            user.password = dto.password;
+            user.activationLink = this.GenerateRandomString(10);
+
+            context.Users.Add(user);
             await context.SaveChangesAsync();
 
-            return model;
+            return user;
         }
 
         async public Task<List<User>?> FindAll()
@@ -103,7 +115,7 @@ namespace Reborn.Services
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProductExists(id))
+                if (!UserExists(id))
                 {
                     return null;
                 }
@@ -116,9 +128,21 @@ namespace Reborn.Services
             return model;
         }
 
-        private bool ProductExists(int id)
+        private bool UserExists(int id)
         {
-            return (context.Products?.Any(e => e.id == id)).GetValueOrDefault();
+            return (context.Users?.Any(e => e.id == id)).GetValueOrDefault();
+        }
+
+        private string GenerateRandomString(int length)
+        {
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var random = new Random();
+            var stringChars = new char[length];
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+            return new String(stringChars);
         }
     }
 }

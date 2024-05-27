@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Reborn.Dto;
 using Reborn.Models;
 using Reborn.Services;
 
@@ -11,17 +12,18 @@ namespace Reborn.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly IProductsService productsService;
+        
 
         public ProductsController(IProductsService productsService)
         {
+            
             this.productsService = productsService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct([FromBody] Product product)
+        public async Task<ActionResult<Product>> PostProduct(IFormFile file, [FromForm] CreateProductDto product)
         {
-         
-            return Ok(await productsService.Create(product));
+            return Ok(await productsService.Create(product, file));
         }
 
         [HttpGet]
