@@ -9,13 +9,6 @@ namespace Reborn.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
-
-        [Required]
-        public int user_Id { get; set; }
-
-        [Required]
-        public int product_Id { get; set; } 
-
         [Required]
         public string status { get; set; }
 
@@ -24,8 +17,13 @@ namespace Reborn.Models
 
         [Required]
         public DateOnly pickup_date { get; set; }
-
+        
+        [Required]
         public Product Product { get; set; }
+        public int Product_Id{get;set;}
+        
+        [Required]
         public User User { get; set; }
+        public int User_Id{get;set;}
     }
 }

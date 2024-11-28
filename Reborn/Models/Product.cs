@@ -26,6 +26,6 @@ namespace Reborn.Models
 
         public string image { get; set; }
 
-        // public ICollection<Order> orders { get; }
+         public ICollection<Order> Orders { get; }
     }
 }

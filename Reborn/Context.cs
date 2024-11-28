@@ -16,9 +16,16 @@ namespace Reborn
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Product>().HasKey("id");
+            builder.Entity<Product>().HasMany(e=> e.Orders)
+                                                            .WithOne(e=> e.Product)
+                                                            .HasForeignKey(e=> e.Product_Id)
+                                                            .HasPrincipalKey(e=> e.id);
+            
             builder.Entity<Order>().HasKey("id");
-            builder.Entity<User>().HasKey("id");
+            builder.Entity<User>().HasMany(e=> e.Orders)
+                                                        .WithOne(e=> e.User)
+                                                        .HasForeignKey(e=> e.User_Id)
+                                                        .HasPrincipalKey(e=> e.id);
 
         }
     }
