@@ -10,7 +10,6 @@
 *.userosscache
 *.sln.docstates
 
-appsettings.json
 /Reborn/Uploads
 
 # User-specific files (MonoDevelop/Xamarin Studio)
