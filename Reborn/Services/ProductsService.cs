@@ -32,6 +32,7 @@ namespace Reborn.Services
             product.price = dto.price;
             product.color = dto.color;
             product.size = dto.size;
+            product.type = dto.type;
             product.image = fileService.Upload(file);
 
             context.Products.Add(product);

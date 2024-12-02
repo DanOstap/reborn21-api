@@ -13,6 +13,9 @@ namespace Reborn.Models
         public string name { get; set; }
 
         [Required]
+        public string type { get; set; }
+
+        [Required]
         public string description { get; set; }
 
         [Required]

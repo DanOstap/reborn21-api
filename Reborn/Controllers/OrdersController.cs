@@ -33,5 +33,12 @@ namespace Reborn.Controllers
             var Order = await service.Update(id, order);
             return (Order == null) ? Ok() : NotFound(new { message = $"Order by if {id} not found." });
         }
+
+        [HttpGet]
+        public async Task<List<Order>> GetOrdersByProduct( string product)
+        {
+            
+            return await service.GetAAllByProducts(product);
+        }
     }
 }

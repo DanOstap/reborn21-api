@@ -6,6 +6,9 @@ namespace Reborn.Dto
     {
         [Required]
         public string name { get; set; }
+        
+        [Required]
+        public string type { get; set; }
 
         [Required]
         public string description { get; set; }
@@ -18,5 +21,8 @@ namespace Reborn.Dto
 
         [Required]
         public string size { get; set; }
+        
+        public string image { get; set; }
+
     }
 }

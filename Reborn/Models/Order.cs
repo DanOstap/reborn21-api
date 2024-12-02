@@ -17,13 +17,19 @@ namespace Reborn.Models
 
         [Required]
         public DateOnly pickup_date { get; set; }
+
+        public Product Product { get; set; }
         
         [Required]
-        public Product Product { get; set; }
+        [ForeignKey("Product")]
         public int Product_Id{get;set;}
         
-        [Required]
         public User User { get; set; }
+        [Required]
+        [ForeignKey("User")]
         public int User_Id{get;set;}
+        
+        public string  adress{get;set;}
+
     }
 }

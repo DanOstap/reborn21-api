@@ -11,6 +11,7 @@ namespace Reborn.Services
         public Task<Order?> FindOneById(int id);
         public Task<Order?> Update(int id, Order model);
         public Task<Order?> Remove(int id);
+        public Task<List<Order>> GetAAllByProducts(string name_product);
     }
     public class OrdersService : IOrderService
     {
@@ -65,6 +66,16 @@ namespace Reborn.Services
             return order;
         }
 
+        public async Task<List<Order>> GetAAllByProducts(string name_product)
+        {
+            List<Order> listProducts = new List<Order>();
+            var orders = await context.Orders?.FirstOrDefaultAsync();
+            foreach (var items in listProducts)
+            {
+                if(items.Product.name.ToString() == name_product) listProducts.Add(items);
+            }
+            return listProducts;
+        }
 
     }
 }
