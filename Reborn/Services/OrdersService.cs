@@ -12,6 +12,7 @@ namespace Reborn.Services
         public Task<Order?> Update(int id, Order model);
         public Task<Order?> Remove(int id);
         public Task<List<Order>> GetAAllByProducts(string name_product);
+        public Task<List<Order>> GetAAllByUser( int user_id);
     }
     public class OrdersService : IOrderService
     {
@@ -77,5 +78,15 @@ namespace Reborn.Services
             return listProducts;
         }
 
+        public async Task<List<Order>> GetAAllByUser(int user_id)
+        {
+            List<Order> listUsers = new List<Order>();
+            var orders = await context.Orders?.FirstOrDefaultAsync();
+            foreach (var user in listUsers)
+            {
+                if (user.User_Id == user_id) listUsers.Add(user);
+            }
+            return listUsers;
+        }
     }
 }

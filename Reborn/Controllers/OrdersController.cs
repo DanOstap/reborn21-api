@@ -34,11 +34,16 @@ namespace Reborn.Controllers
             return (Order == null) ? Ok() : NotFound(new { message = $"Order by if {id} not found." });
         }
 
-        [HttpGet]
-        public async Task<List<Order>> GetOrdersByProduct( string product)
+        [HttpGet("ByProduct/{name}")]
+        public async Task<List<Order>> GetOrdersByProduct( string product_name)
         {
-            
-            return await service.GetAAllByProducts(product);
+            return await service.GetAAllByProducts(product_name);
+        }
+
+        [HttpGet("ByUser/{id}")]
+        public async Task<List<Order>> GetOrdersByUser(int id)
+        {
+            return await service.GetAAllByUser(id);
         }
     }
 }
