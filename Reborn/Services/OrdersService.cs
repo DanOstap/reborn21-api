@@ -23,7 +23,7 @@ namespace Reborn.Services
         async public Task<Order> Create(Order model) {
             context.Orders.Add(model);
             await context.SaveChangesAsync();
-            return model;
+            return model; 
         }
         async public Task<List<Order>> FindAll() {
             if (context.Orders == null) return null;
