@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Reborn;
 using Reborn.Services;
 using System.Text;
+using Reborn.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,8 @@ app.Map("/ws", async (HttpContext context) =>
 {
     if (context.WebSockets.IsWebSocketRequest)
     {
+        var userRequestIP = context.Connection.RemoteIpAddress?.ToString();
+        var requestCounts = RequestTrackingMeddleware.RequestCount(userRequestIP);
         using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
         Console.WriteLine("WebSocket connection established.");
         var buffer = new byte[1024 * 4];
@@ -64,9 +67,9 @@ app.Map("/ws", async (HttpContext context) =>
             var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             if (result.MessageType == WebSocketMessageType.Text)
             {
-                var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                var message = Encoding.UTF8.GetString(buffer, 0, requestCounts);
                 Console.WriteLine($"Received: {message}");
-                var response = Encoding.UTF8.GetBytes($"Server received: {message}");
+                var response = Encoding.UTF8.GetBytes($"{message}");
                 await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
             }
             else if (result.MessageType == WebSocketMessageType.Close)
@@ -85,7 +88,7 @@ app.Map("/ws", async (HttpContext context) =>
         }
     }
 });
-
+app.UseMiddleware<RequestTrackingMeddleware>();
 app.UseCookiePolicy();
 app.UseAuthorization();
 app.UseCors();
