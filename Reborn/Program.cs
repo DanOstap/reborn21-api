@@ -53,41 +53,6 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.Map("/ws", async (HttpContext context) =>
-{
-    if (context.WebSockets.IsWebSocketRequest)
-    {
-        var userRequestIP = context.Connection.RemoteIpAddress?.ToString();
-        var requestCounts = RequestTrackingMeddleware.RequestCount(userRequestIP);
-        using var webSocket = await context.WebSockets.AcceptWebSocketAsync();
-        Console.WriteLine("WebSocket connection established.");
-        var buffer = new byte[1024 * 4];
-        while (webSocket.State == WebSocketState.Open)
-        {
-            var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
-            if (result.MessageType == WebSocketMessageType.Text)
-            {
-                var message = Encoding.UTF8.GetString(buffer, 0, requestCounts);
-                Console.WriteLine($"Received: {message}");
-                var response = Encoding.UTF8.GetBytes($"{message}");
-                await webSocket.SendAsync(new ArraySegment<byte>(response), WebSocketMessageType.Text, true, CancellationToken.None);
-            }
-            else if (result.MessageType == WebSocketMessageType.Close)
-            {
-                Console.WriteLine("WebSocket connection closed.");
-                await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closing", CancellationToken.None);
-            }
-            else
-            {
-                context.Response.StatusCode = 400;
-            }
-
-            {
-                
-            }
-        }
-    }
-});
 app.UseMiddleware<RequestTrackingMeddleware>();
 app.UseCookiePolicy();
 app.UseAuthorization();

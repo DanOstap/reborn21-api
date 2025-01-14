@@ -4,6 +4,7 @@
     <mapping directory="" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Project_Lua" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Projects" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../reborn" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../reborn-admin-panel" vcs="Git" />
   </component>
 </project>
