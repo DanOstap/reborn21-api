@@ -1,11 +1,10 @@
-using System.Net.WebSockets;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Reborn;
 using Reborn.Services;
 using System.Text;
-using Reborn.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,19 +42,27 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
          IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
      };
  });
-
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        policy =>
+        {
+            policy.WithOrigins("*") 
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+app.UseCors("AllowSpecificOrigin");
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseMiddleware<RequestTrackingMeddleware>();
 app.UseCookiePolicy();
 app.UseAuthorization();
-app.UseCors();
 app.MapControllers();
 app.Run();

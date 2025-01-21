@@ -23,11 +23,11 @@ namespace Reborn.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(IFormFile file, [FromForm] CreateProductDto product)
         {
-            return Ok(await productsService.Create(product, file));
+            Console.WriteLine("Product post");
+            return NotFound(await productsService.Create(product, file));
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             var Products = await productsService.FindAll();

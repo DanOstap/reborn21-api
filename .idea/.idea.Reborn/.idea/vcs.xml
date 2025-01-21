@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../21-reborn" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/../Appointment_Scheduler_" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Project_Lua" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../Projects" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/../reborn" vcs="Git" />

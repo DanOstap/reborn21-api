@@ -30,11 +30,15 @@ namespace Reborn.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
 
-                    b.Property<int>("Productid")
+                    b.Property<int>("Product_Id")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Userid")
+                    b.Property<int>("User_Id")
                         .HasColumnType("integer");
+
+                    b.Property<string>("adress")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateOnly>("creation_date")
                         .HasColumnType("date");
@@ -42,21 +46,15 @@ namespace Reborn.Migrations
                     b.Property<DateOnly>("pickup_date")
                         .HasColumnType("date");
 
-                    b.Property<int>("product_Id")
-                        .HasColumnType("integer");
-
                     b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("user_Id")
-                        .HasColumnType("integer");
-
                     b.HasKey("id");
 
-                    b.HasIndex("Productid");
+                    b.HasIndex("Product_Id");
 
-                    b.HasIndex("Userid");
+                    b.HasIndex("User_Id");
 
                     b.ToTable("orders");
                 });
@@ -89,6 +87,10 @@ namespace Reborn.Migrations
                         .HasColumnType("double precision");
 
                     b.Property<string>("size")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("type")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -128,20 +130,30 @@ namespace Reborn.Migrations
             modelBuilder.Entity("Reborn.Models.Order", b =>
                 {
                     b.HasOne("Reborn.Models.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("Productid")
+                        .WithMany("Orders")
+                        .HasForeignKey("Product_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Reborn.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("Userid")
+                        .WithMany("Orders")
+                        .HasForeignKey("User_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Reborn.Models.Product", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Reborn.Models.User", b =>
+                {
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
