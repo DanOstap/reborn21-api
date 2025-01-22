@@ -26,9 +26,8 @@ namespace Reborn.Models
 
         [Required]
         public string size { get; set; }
-
+        
         public string image { get; set; }
-
          public ICollection<Order> Orders { get; }
     }
 }

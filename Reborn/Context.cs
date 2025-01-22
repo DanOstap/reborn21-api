@@ -26,7 +26,6 @@ namespace Reborn
                                                         .WithOne(e=> e.User)
                                                         .HasForeignKey(e=> e.User_Id)
                                                         .HasPrincipalKey(e=> e.id);
-
         }
     }
 }

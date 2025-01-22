@@ -22,7 +22,6 @@ namespace Reborn.Dto
         [Required]
         public string size { get; set; }
         
-        public string image { get; set; }
-
+        public IFormFile image { get; set; }
     }
 }

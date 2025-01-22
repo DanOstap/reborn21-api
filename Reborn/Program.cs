@@ -56,7 +56,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
-
+builder.Services.AddSwaggerGen(c =>
+{
+    c.OperationFilter<SwaggerFileUploadOperationFilter>();
+});
 var app = builder.Build();
 app.UseCors("AllowSpecificOrigin");
 app.UseSwagger();

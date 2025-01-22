@@ -5,7 +5,7 @@ using Reborn.Models;
 namespace Reborn.Services
 {
     public interface IProductsService {
-        public Task<Product> Create(CreateProductDto dto, IFormFile file);
+        public Task<Product> Create(CreateProductDto dto);
         public Task<List<Product>?> FindAll();
         public Task<Product?> FindOneById(int id);
         public Task<Product?> Update(int id, Product model);
@@ -23,24 +23,37 @@ namespace Reborn.Services
             this.fileService = fileService;
         }
 
-        public async Task<Product> Create(CreateProductDto dto, IFormFile file)
+        public async Task<Product> Create(CreateProductDto dto)
         {
-            Product product = new Product();
+            try
+            {
+                var imageFile = fileService.Upload(dto.image);
+                Product product = new Product
+                {
+                    name = dto.name,
+                    description = dto.description,
+                    price = dto.price,
+                    color = dto.color,
+                    size = dto.size,
+                    type = dto.type,
+                    image = imageFile
+                };
 
-            product.name = dto.name;
-            product.description = dto.description;
-            product.price = dto.price;
-            product.color = dto.color;
-            product.size = dto.size;
-            product.type = dto.type;
-            product.image = fileService.Upload(file);
+                context.Products.Add(product);
+                await context.SaveChangesAsync();
 
-            context.Products.Add(product);
-            await context.SaveChangesAsync();
-
-            return product;
+                return product;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ERROR: " + ex.Message);
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine("INNER EXCEPTION: " + ex.InnerException.Message);
+                }
+                throw;
+            }
         }
-
         public async Task<Product?> FindOneById(int id)
         {
             if (context.Products == null)

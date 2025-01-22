@@ -21,11 +21,20 @@ namespace Reborn.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Product>> PostProduct(IFormFile file, [FromForm] CreateProductDto product)
+        [Consumes("multipart/form-data")] 
+        public async Task<ActionResult<Product>> PostProduct([FromForm] CreateProductDto product)
         {
-            Console.WriteLine("Product post");
-            return NotFound(await productsService.Create(product, file));
-        }
+            try
+            {
+                var result = await productsService.Create(product);
+                return Ok(result);
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { error = ex.Message });
+            }
+}
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
